@@ -2,10 +2,7 @@ class RoundRobin(object):
     def __init__(self):
         self.pass_ = None
 
-    def processData(self, no_of_processes):
-        if self.pass_:
-            pass
-
+    def process_data(self, no_of_processes):
         process_data = []
         temp_list = []
         final_list = []
@@ -27,17 +24,12 @@ class RoundRobin(object):
             burst_time = final_list[i][2]
 
             temporary.extend([process_id, arrival_time, burst_time, 0, burst_time])
-
             process_data.append(temporary)
 
         quantum_time = int(input("Time Quantum: "))
+        RoundRobin.scheduling_process(self, process_data, quantum_time)
 
-        RoundRobin.schedulingProcess(self, process_data, quantum_time)
-
-    def schedulingProcess(self, process_data, time_slice):
-        if self.pass_:
-            pass
-
+    def scheduling_process(self, process_data, time_slice):
         start_time = []
         exit_time = []
         executed_process = []
@@ -84,9 +76,8 @@ class RoundRobin(object):
                 break
             if len(ready_queue) != 0:
                 if ready_queue[0][2] > time_slice:
-                    '''
-                    If process has remaining burst time greater than the time slice, it will execute for a time period equal to time slice and then switch
-                    '''
+                    '''If process has remaining burst time greater than the time slice, it will execute for a time 
+                    period equal to time slice and then switch '''
                     start_time.append(s_time)
                     s_time = s_time + time_slice
                     e_time = s_time
@@ -98,9 +89,8 @@ class RoundRobin(object):
                     process_data[j][2] = process_data[j][2] - time_slice
                     ready_queue.pop(0)
                 elif ready_queue[0][2] <= time_slice:
-                    '''
-                    If a process has a remaining burst time less than or equal to time slice, it will complete its execution
-                    '''
+                    '''If a process has a remaining burst time less than or equal to time slice, it will complete its 
+                    execution '''
                     start_time.append(s_time)
                     s_time = s_time + ready_queue[0][2]
                     e_time = s_time
@@ -117,9 +107,8 @@ class RoundRobin(object):
                 if s_time < normal_queue[0][1]:
                     s_time = normal_queue[0][1]
                 if normal_queue[0][2] > time_slice:
-                    '''
-                    If process has remaining burst time greater than the time slice, it will execute for a time period equal to time slice and then switch
-                    '''
+                    '''If process has remaining burst time greater than the time slice, it will execute for a time 
+                    period equal to time slice and then switch '''
                     start_time.append(s_time)
                     s_time = s_time + time_slice
                     e_time = s_time
@@ -130,9 +119,8 @@ class RoundRobin(object):
                             break
                     process_data[j][2] = process_data[j][2] - time_slice
                 elif normal_queue[0][2] <= time_slice:
-                    '''
-                    If a process has a remaining burst time less than or equal to time slice, it will complete its execution
-                    '''
+                    '''If a process has a remaining burst time less than or equal to time slice, it will complete its 
+                    execution '''
                     start_time.append(s_time)
                     s_time = s_time + normal_queue[0][2]
                     e_time = s_time
@@ -144,11 +132,11 @@ class RoundRobin(object):
                     process_data[j][2] = 0
                     process_data[j][3] = 1
                     process_data[j].append(e_time)
-        t_time = RoundRobin.calculateTurnaroundTime(self, process_data)
-        w_time = RoundRobin.calculateWaitingTime(self, process_data)
-        RoundRobin.printData(self, process_data, t_time, w_time, executed_process)
+        t_time = RoundRobin.calculate_turn_around_time(self, process_data)
+        w_time = RoundRobin.calculate_waiting_time(self, process_data)
+        RoundRobin.print_data(self, process_data, t_time, w_time)
 
-    def calculateTurnaroundTime(self, process_data):
+    def calculate_turn_around_time(self, process_data):
         if self.pass_:
             pass
 
@@ -166,7 +154,7 @@ class RoundRobin(object):
         '''
         return average_turnaround_time
 
-    def calculateWaitingTime(self, process_data):
+    def calculate_waiting_time(self, process_data):
         if self.pass_:
             pass
 
@@ -184,7 +172,7 @@ class RoundRobin(object):
         '''
         return average_waiting_time
 
-    def printData(self, process_data, average_turnaround_time, average_waiting_time, executed_process):
+    def print_data(self, process_data, average_turnaround_time, average_waiting_time):
         if self.pass_:
             pass
 
@@ -210,6 +198,5 @@ class RoundRobin(object):
 
 
 if __name__ == "__main__":
-    no_of_processes = sum(1 for line in open('round_robin.txt'))
-    rr = RoundRobin()
-    rr.processData(no_of_processes)
+    number_of_processes = sum(1 for line in open('round_robin.txt'))
+    RoundRobin().process_data(number_of_processes)
